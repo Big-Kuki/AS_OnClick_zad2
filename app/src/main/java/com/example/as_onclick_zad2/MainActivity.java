@@ -25,6 +25,35 @@ public class MainActivity extends AppCompatActivity {
             counter++;
             updateCounter();
         });
+
+        // Drugi sposób: jeden listener dla dwóch przycisków.
+        View.OnClickListener sharedListener = v -> {
+            if (v.getId() == R.id.btnMinus) {
+                if (counter == 0) {
+                    Toast.makeText(
+                            this,
+                            R.string.error_negative,
+                            Toast.LENGTH_SHORT
+                    ).show();
+                    return;
+                }
+                counter--;
+                updateCounter();
+
+            } else if (v.getId() == R.id.btnReset) {
+                counter = 0;
+                updateCounter();
+
+                Toast.makeText(
+                        this,
+                        R.string.reset_message,
+                        Toast.LENGTH_SHORT
+                ).show();
+            }
+        };
+
+        findViewById(R.id.btnMinus).setOnClickListener(sharedListener);
+        findViewById(R.id.btnReset).setOnClickListener(sharedListener);
     }
 
     private void updateCounter() {
